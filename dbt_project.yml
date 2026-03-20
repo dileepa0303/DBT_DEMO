@@ -1,20 +1,51 @@
 name: my_project
 version: 1.0
 config-version: 2
- 
-profile: my_profile
- 
+
+profile: snowflake_profile
+
+# Paths
 model-paths: ["models"]
 seed-paths: ["seeds"]
 test-paths: ["tests"]
-analysis-paths: ["analysis"]
+analysis-paths: ["analysis"] 
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
- 
+
 clean-targets:
   - "target"
   - "dbt_packages"
- 
+
+# Models configuration
 models:
   my_project:
-    +materialized: view
+
+    staging:
+      +materialized: incremental
+      +schema: STAGING
+      
+    transform:
+      +materialized: incremental
+      +schema: INT
+  
+    mart:
+      +schema: MART
+
+snapshots:
+  my_project:
+    +target_schema: MART
+
+
+vars:
+  load_type: "incremental"
+  timezone: "UTC"
+
+
+on-run-start:
+  - "ALTER SESSION SET TIMEZONE = 'UTC'"
+
+
+quoting:
+  database: false
+  schema: false
+  identifier: false
