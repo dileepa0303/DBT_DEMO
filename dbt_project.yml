@@ -8,7 +8,7 @@ profile: snowflake_profile
 model-paths: ["models"]
 seed-paths: ["seeds"]
 test-paths: ["tests"]
-analysis-paths: ["analyses"] 
+analysis-paths: ["analysis"] 
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
